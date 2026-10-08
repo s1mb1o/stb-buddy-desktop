@@ -1,0 +1,155 @@
+:root {
+  --bg: #fbfbfa;
+  --bar-bg: #f0f0ee;
+  --fg: #1f2328;
+  --muted: #656d76;
+  --border: #d0d7de;
+  --button-bg: #ffffff;
+  --button-hover: #eaeef2;
+  --ok: #1a7f37;
+  --bad: #cf222e;
+  --agent: #8250df;
+  --accent: #0969da;
+  --accent-fg: #ffffff;
+  --backdrop: rgb(31 35 40 / 45%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1115;
+    --bar-bg: #171a21;
+    --fg: #d7dae0;
+    --muted: #8b949e;
+    --border: #30363d;
+    --button-bg: #21262d;
+    --button-hover: #30363d;
+    --ok: #3fb950;
+    --bad: #f85149;
+    --agent: #bc8cff;
+    --accent: #2f81f7;
+    --accent-fg: #ffffff;
+    --backdrop: rgb(1 4 9 / 65%);
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  padding: 6px 12px;
+  background: var(--bar-bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.name { font-weight: 600; }
+.muted { color: var(--muted); }
+.spacer { flex: 1; }
+
+.device {
+  color: var(--muted);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  max-width: 40ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.agents { color: var(--agent); }
+
+.pill {
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+.pill.on { background: var(--ok); }
+.pill.off { background: var(--bad); }
+
+.message { color: var(--bad); }
+
+button, .button {
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--button-bg);
+  color: var(--fg);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+button:hover, .button:hover { background: var(--button-hover); }
+
+button:disabled, input:disabled { opacity: 0.6; cursor: default; }
+button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+button.primary:hover:not(:disabled) { background: var(--accent); filter: brightness(1.1); }
+
+/* R38: Download file dialog */
+dialog {
+  width: min(560px, calc(100vw - 32px));
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bar-bg);
+  color: var(--fg);
+}
+dialog::backdrop { background: var(--backdrop); }
+dialog h2 { margin: 0 0 12px; font-size: 15px; }
+dialog label { display: block; margin-bottom: 4px; font-weight: 600; }
+dialog input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg);
+  font: 13px ui-monospace, "SF Mono", Menlo, monospace;
+}
+dialog input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+.hint { margin: 6px 0 0; color: var(--muted); font-size: 12px; }
+
+.dl-status { margin-top: 12px; overflow-wrap: anywhere; }
+.dl-status:empty { display: none; }
+.dl-status.error { color: var(--bad); white-space: pre-wrap; }
+.dl-status.busy::before {
+  content: "";
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  margin-right: 8px;
+  vertical-align: -1px;
+  border: 2px solid var(--muted);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .dl-status.busy::before { animation: none; } }
+.dl-status .ok { margin: 0 0 8px; color: var(--ok); font-weight: 600; }
+.dl-result { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; margin: 0; }
+.dl-result dt { color: var(--muted); }
+.dl-result dd { margin: 0; min-width: 0; }
+.mono { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; }
+.dl-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+
+#terminal {
+  flex: 1;
+  min-height: 0;
+  padding: 4px 0 0 8px;
+}

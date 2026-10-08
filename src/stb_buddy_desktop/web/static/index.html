@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>STB Buddy Desktop</title>
+  <link rel="stylesheet" href="/static/vendor/xterm/xterm.css">
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <header class="bar">
+    <span id="link" class="pill off" title="Serial port state">connecting…</span>
+    <span class="name">STB Buddy Desktop</span>
+    <span id="device" class="device"></span>
+    <span id="clients" class="muted"></span>
+    <span id="agents" class="agents"></span>
+    <span class="spacer"></span>
+    <span id="message" class="message" role="status"></span>
+    <button id="break" type="button" title="Send a serial BREAK (0.25 s)">BREAK</button>
+    <button id="clear-history" type="button" title="Clear all retained console output and notes">Clear History</button>
+    <button id="download" type="button" title="Copy a file from the board and save it on this computer">Download file…</button>
+    <a id="log" class="button" href="/api/log" download>Download log</a>
+    <a class="button" href="/docs" target="_blank" rel="noopener">API docs</a>
+  </header>
+  <main id="terminal"></main>
+  <dialog id="dl-dialog" aria-labelledby="dl-title">
+    <form id="dl-form">
+      <h2 id="dl-title">Download file from the board</h2>
+      <label for="dl-path">Full path on the board</label>
+      <input id="dl-path" type="text" placeholder="/etc/hosts" autocomplete="off" autocapitalize="off" spellcheck="false" required>
+      <p class="hint">The board must be at the shell prompt. Small files go over the console. Large files try the network (nc) first.</p>
+      <div id="dl-status" class="dl-status" role="status" aria-live="polite"></div>
+      <div class="dl-actions">
+        <button id="dl-cancel" type="button">Cancel</button>
+        <button id="dl-start" type="submit" class="primary">Download</button>
+      </div>
+    </form>
+  </dialog>
+  <script src="/static/vendor/xterm/xterm.js"></script>
+  <script src="/static/vendor/xterm/addon-fit.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

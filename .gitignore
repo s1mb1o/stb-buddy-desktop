@@ -1,0 +1,10 @@
+.venv/
+.ruff_cache/
+dist/
+*.egg-info/
+__pycache__/
+*.pyc
+logs/
+ResearchLog.md
+term-*.png
+docs-dark.png
