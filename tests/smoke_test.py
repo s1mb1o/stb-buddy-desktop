@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import json
 import os
@@ -14,6 +15,9 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 from typing import Any
+
+from mcp import ClientSession
+from mcp.client.streamable_http import streamable_http_client
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -52,6 +56,13 @@ def log_tail(path: Path) -> str:
     if not path.exists():
         return ""
     return path.read_text(errors="replace")[-4000:]
+
+
+async def mcp_catalog(base_url: str) -> tuple[str, str, list[str]]:
+    async with streamable_http_client(base_url + "/mcp") as (read, write), ClientSession(read, write) as session:
+        initialized = await session.initialize()
+        tools = await session.list_tools()
+        return initialized.server_info.name, initialized.server_info.version, [tool.name for tool in tools.tools]
 
 
 def main() -> None:
@@ -135,6 +146,11 @@ def main() -> None:
                 openapi = request(base_url, "/openapi.json")
                 assert openapi["info"]["title"] == "STB Buddy Desktop"
                 assert "/api/download" in openapi["paths"]
+
+                mcp_name, mcp_version, mcp_tools = asyncio.run(mcp_catalog(base_url))
+                assert mcp_name == "stb-buddy-desktop"
+                assert mcp_version == "1.0.0"
+                assert mcp_tools == ["status", "read", "write", "wait_for", "send_and_wait", "download", "clear_history"]
 
                 result = request(
                     base_url,

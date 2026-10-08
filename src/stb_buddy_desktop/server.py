@@ -9,6 +9,7 @@ from __future__ import annotations
 from mcp.server.mcpserver import Context, MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
 
+from . import __version__
 from .desktop import (
     Chunk,
     ClearHistoryResult,
@@ -44,7 +45,14 @@ def _source(ctx: Context) -> str:
 
 
 def build_server(desktop: StbBuddyDesktop) -> MCPServer:
-    mcp = MCPServer("stb-buddy-desktop", instructions=INSTRUCTIONS)
+    mcp = MCPServer(
+        "stb-buddy-desktop",
+        title="STB Buddy Desktop",
+        description="Shared browser, MCP, REST, and PTY access to one STB serial console.",
+        instructions=INSTRUCTIONS,
+        website_url="https://github.com/s1mb1o/stb-buddy-desktop",
+        version=__version__,
+    )
 
     @mcp.tool()
     def status() -> Status:

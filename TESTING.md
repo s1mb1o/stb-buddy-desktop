@@ -17,6 +17,7 @@ loopback port. It verifies:
 - serial connection and status;
 - command send/wait and output cleanup;
 - REST and OpenAPI identity;
+- MCP server identity, version, and seven-tool catalog;
 - a SHA-256-verified serial file download;
 - clear-history offset behavior;
 - clean service shutdown.
