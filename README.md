@@ -8,9 +8,10 @@ STB Buddy Desktop shares one set-top-box serial console between a browser,
 MCP clients, scripts, and terminal programs. It runs on a Linux desktop or
 development host connected to the STB through a USB UART adapter.
 
-It is the desktop-hosted counterpart to the embedded **stb-buddy** appliance:
-the same browser/MCP approach, with host features such as persistent logs,
-large downloads, and a PTY for `minicom`.
+It is the desktop-hosted counterpart to the embedded
+[**stb-buddy**](https://github.com/s1mb1o/stb-buddy) appliance: the same
+browser/MCP approach, with host features such as persistent logs, large
+downloads, and a PTY for `minicom`.
 
 > [!WARNING]
 > STB Buddy Desktop has no authentication or TLS. It binds to loopback by
